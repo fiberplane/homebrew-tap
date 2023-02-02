@@ -2,46 +2,27 @@ class Fiberplane < Formula
   desc "Command line tools for Fiberplane"
   homepage "https://fiberplane.com"
   url "https://github.com/fiberplane/fp.git"
+  head "https://github.com/fiberplane/fp.git", branch: "main"
   version: "2.4.0"
-  sha256 ""
   license "Apache-2.0 or MIT"
+
+  bottle do
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  ""
+    sha256 cellar: :any_skip_relocation, arm64_monterey: ""
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  ""
+    sha256 cellar: :any_skip_relocation, ventura:        ""
+    sha256 cellar: :any_skip_relocation, monterey:       ""
+    sha256 cellar: :any_skip_relocation, big_sur:        ""
+    sha256 cellar: :any_skip_relocation, catalina:       ""
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   ""
+    sha256 cellar: :any_skip_relocation, arm64_linux:    ""
+  end
 
   depends_on "rust" => :build
 
-  on_macos do
-    if Hardware::CPU.arm?
-      url "https://fp.dev/fp/latest/aarch64-apple-darwin/fp"
-      sha256 "" # FIXME: add sha
-      def install
-        bin.install "fiberplane"
-      end
-    end
-    if Hardware::CPU.intel?
-      url "https://fp.dev/fp/latest/x86_64-apple-darwin/fp"
-      sha256 "" # FIXME: add sha
-      def install
-        bin.install "fiberplane"
-      end
-    end
-  end
-
-  on_linux do
-    if Hardware::CPU.intel?
-      url "https://fp.dev/fp/latest/x86_64-unknown-linux-gnu/fp"
-      sha256 "" # FIXME: add sha
-
-      def install
-        bin.install "fiberplane"
-      end
-    end
-    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://fp.dev/fp/latest/aarch64-unknown-linux-gnu/fp"
-      sha256 "" # FIXME: add sha
-
-      def install
-        bin.install "fiberplane"
-      end
-    end
+  def install
+    system "cargo", "install", "-vv", *std_cargo_args
+    generate_completions_from_executable(bin/"fp", "completion")
   end
 
   test do
