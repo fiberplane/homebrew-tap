@@ -3,26 +3,45 @@ class Fiberplane < Formula
   homepage "https://fiberplane.com"
   url "https://github.com/fiberplane/fp.git"
   head "https://github.com/fiberplane/fp.git", branch: "main"
-  version: "2.4.0"
+  version: "2.6.0"
   license "Apache-2.0 or MIT"
 
-  bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  ""
-    sha256 cellar: :any_skip_relocation, arm64_monterey: ""
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  ""
-    sha256 cellar: :any_skip_relocation, ventura:        ""
-    sha256 cellar: :any_skip_relocation, monterey:       ""
-    sha256 cellar: :any_skip_relocation, big_sur:        ""
-    sha256 cellar: :any_skip_relocation, catalina:       ""
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   ""
-    sha256 cellar: :any_skip_relocation, arm64_linux:    ""
+  on_macos do
+     if Hardware::CPU.arm?
+      url "https://fp.dev/fp/latest/aarch64-apple-darwin/fp"
+      sha256 "4e93ac3b50a250e932077ea0c1467cb82a6b29bdc07d57d9577333e661d9e91b"
+
+      def install
+        bin.install "fp"
+      end
+    end
+    if Hardware::CPU.intel?
+      url "https://fp.dev/fp/latest/x86_64-apple-darwin/fp"
+      sha256 "95c02f980016f394abcee33316677bb964740e66a4cade9eaffa4bb119882850"
+
+      def install
+        bin.install "fp"
+      end
+    end
   end
 
-  depends_on "rust" => :build
+  on_linux do
+        if Hardware::CPU.intel?
+      url "https://fp.dev/fp/latest/x86_64-unknown-linux-gnu/fp"
+      sha256 "c86d74b6c5a4c9dea23aa4dbe36fd909a35480d19008642f9522f82d634fc565"
 
-  def install
-    system "cargo", "install", "-vv", *std_cargo_args
-    generate_completions_from_executable(bin/"fp", "completion")
+      def install
+        bin.install "fp"
+      end
+    end
+    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
+      url "https://fp.dev/fp/latest/aarch64-unknown-linux-gnu/fp"
+      sha256 "71560e22e4d169898e92e76fa5b55f89de1d00c30e8d6ccc2d70fdb348ce356e"
+
+      def install
+        bin.install "fp"
+      end
+    end
   end
 
   test do
