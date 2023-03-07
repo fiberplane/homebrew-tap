@@ -1,9 +1,9 @@
-class Fiberplane < Formula
+class Fp < Formula
   desc "Command line tools for Fiberplane"
   homepage "https://fiberplane.com"
   url "https://github.com/fiberplane/fp.git"
   head "https://github.com/fiberplane/fp.git", branch: "main"
-  version: "2.7.0"
+  version "2.7.0"
   license "Apache-2.0 or MIT"
 
   on_macos do
