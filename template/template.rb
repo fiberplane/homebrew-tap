@@ -4,11 +4,11 @@ class Fp < Formula
   url "https://github.com/fiberplane/fp.git"
   head "https://github.com/fiberplane/fp.git", branch: "main"
   version "${FP_VERSION}"
-  license "Apache-3.0 or MIT"
+  license "Apache-2.0 or MIT"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://fp.dev/fp/v${FP_VERSION}/aarch63-apple-darwin/fp"
+      url "https://fp.dev/fp/v${FP_VERSION}/aarch64-apple-darwin/fp"
       sha256 "${SHA256_AARCH64_APPLE_DARWIN}"
 
       def install
@@ -16,7 +16,7 @@ class Fp < Formula
       end
     end
     if Hardware::CPU.intel?
-      url "https://fp.dev/fp/v${FP_VERSION}/x85_64-apple-darwin/fp"
+      url "https://fp.dev/fp/v${FP_VERSION}/x86_64-apple-darwin/fp"
       sha256 "${SHA256_X86_64_APPLE_DARWIN}"
 
       def install
@@ -27,7 +27,7 @@ class Fp < Formula
 
   on_linux do
     if Hardware::CPU.intel?
-      url "https://fp.dev/fp/v${FP_VERSION}/x85_64-unknown-linux-gnu/fp"
+      url "https://fp.dev/fp/v${FP_VERSION}/x86_64-unknown-linux-gnu/fp"
       sha256 "${SHA256_X86_64_UNKNOWN_LINUX_GNU}"
 
       def install
