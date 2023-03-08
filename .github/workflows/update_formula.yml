@@ -1,0 +1,49 @@
+name: Homebrew update formula
+on:
+  workflow_dispatch:
+    inputs:
+      FP_VERSION:
+        required: true
+        description: "fp release version (just numbers without the v, e.g.: 2.2.0)"
+        type: string
+      SHA256_AARCH64_APPLE_DARWIN:
+        required: true
+        description: "SHA256 for macOS arm64 binary"
+        type: string
+      SHA256_X86_64_APPLE_DARWIN:
+        required: true
+        description: "SHA256 for macOS x86 binary"
+        type: string
+      SHA256_X86_64_UNKNOWN_LINUX_GNU:
+        required: true
+        description: "SHA256 for Linux x86 binary"
+        type: string
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+
+jobs:
+  homebrew:
+    name: Update Homebrew formula
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run update script
+        env:
+          FP_VERSION: ${{ inputs.FP_VERSION }}
+          SHA256_AARCH64_APPLE_DARWIN: ${{ inputs.SHA256_AARCH64_APPLE_DARWIN }}
+          SHA256_X86_64_APPLE_DARWIN: ${{ inputs.SHA256_X86_64_APPLE_DARWIN }}
+          SHA256_X86_64_UNKNOWN_LINUX_GNU: ${{ inputs.SHA256_X86_64_UNKNOWN_LINUX_GNU }}
+        run: ./update_homebrew_formula.sh
+        shell: bash
+
+      - name: Commit changed file
+        run: |
+          git config --global user.name "FiberBot"
+          git config --global user.email "username@users.noreply.github.com"
+          git add ./Formula/fp.rb
+          git commit -m "Updated homebrew formula for v${{ inputs.FP_VERSION }} release"
+          git push
+
