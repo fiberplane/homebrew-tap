@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  homebrew:
+    runs-on: macos-14
+    steps:
+      - name: Check out tap
+        uses: actions/checkout@v4
+
+      - name: Link checkout into Homebrew tap path
+        run: |
+          BREW_REPO="$(brew --repository)"
+          mkdir -p "$BREW_REPO/Library/Taps/fiberplane"
+          ln -sfn "$GITHUB_WORKSPACE" "$BREW_REPO/Library/Taps/fiberplane/homebrew-tap"
+
+      - name: Audit formula
+        run: brew audit --strict --online fiberplane/tap/drift
+
+      - name: Install formula
+        run: brew install fiberplane/tap/drift
+
+      - name: Run formula test
+        run: brew test fiberplane/tap/drift
