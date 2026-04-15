@@ -50,7 +50,10 @@ jobs:
           GIT_COMMITTER_NAME: "github-actions[bot]"
           GIT_COMMITTER_EMAIL: "github-actions[bot]@users.noreply.github.com"
         run: |
-          command git add Formula/drift.rb
-          command git diff --staged --quiet && echo "No changes" && exit 0
-          command git commit -m "chore: update drift formula to v${{ steps.formula.outputs.version }}"
-          command git push
+          git add Formula/drift.rb
+          if git diff --staged --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "chore: update drift formula to v${{ steps.formula.outputs.version }}"
+          git push origin main
