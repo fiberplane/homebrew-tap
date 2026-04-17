@@ -5,23 +5,23 @@ class Drift < Formula
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/fiberplane/drift/releases/download/v0.9.0/drift-aarch64-macos.tar.gz"
-      sha256 "1abff42901d016df2e7b9b0072e2a5adfa0db9a870a9520d5d17cad13fe5c226"
+      url "https://github.com/fiberplane/drift/releases/download/v0.9.1/drift-aarch64-macos.tar.gz"
+      sha256 "30b68da61f8b28ea0337aeda75111692b1f2da4974c64e016f3b6a4554806c6c"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/fiberplane/drift/releases/download/v0.9.0/drift-x86_64-macos.tar.gz"
-      sha256 "c56025a2ede4c08dbc611b8946905e5fad66dc1d0babd09424c640d416127f4d"
+      url "https://github.com/fiberplane/drift/releases/download/v0.9.1/drift-x86_64-macos.tar.gz"
+      sha256 "0845a3740404740d95e85fbec47065c3b4363f9f00e26588799c9c1c02ef9c30"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/fiberplane/drift/releases/download/v0.9.0/drift-aarch64-linux.tar.gz"
-      sha256 "159060d7bb243316dfc8d25233691980111600554863981afafa74a95220de2e"
+      url "https://github.com/fiberplane/drift/releases/download/v0.9.1/drift-aarch64-linux.tar.gz"
+      sha256 "02e3af09e75f398736aee179adadd8a3b8295cdd7a2d7ac8e37fc58cd4e15a35"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/fiberplane/drift/releases/download/v0.9.0/drift-x86_64-linux.tar.gz"
-      sha256 "fe1533c8fd475534f360c79b9316e0a1e3b66e11a5e3f21611c8eaa59809c71a"
+      url "https://github.com/fiberplane/drift/releases/download/v0.9.1/drift-x86_64-linux.tar.gz"
+      sha256 "9b13bcccc72050fd8c6290d1440e079a5a53592a18fb25d56b704a0ce69571c9"
     end
   end
 
